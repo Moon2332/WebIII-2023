@@ -4,21 +4,51 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajouter une information</title>
+    <title>Modifier une information</title>
 </head>
 <body>
-<?php
+    <?php
         $servername = "localhost";
         $username = "root";
         $password = "root";
         $db = "tableexercice";
-   
-        $nom = ""; $nomErreur = "";
-        $prenom = ""; $prenomErr = "";
-        $perso = ""; $persoErr = "";
-        $imagePerso = ""; $imagePersoErr = "";
+
+        $nomErreur = "";
+        $prenomErr = "";
+        $persoErr = "";
+        $imagePersoErr = "";
         $erreur = false;
-   
+
+        // Create connection
+        $conn =new mysqli($servername, $username, $password, $db);
+        $conn->query('SET NAMES utf8');
+
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+        //echo "Connected successfully";
+        
+        if ($_SERVER["REQUEST_METHOD"] != "POST") {
+            $id = $_GET['id'];
+
+            $sql = "SELECT * FROM cours WHERE id = " . $id;
+    
+            $result = $conn->query($sql);
+    
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $nom = $row['nom'];     
+                $prenom = $row['prenom'];    
+                $perso = $row['perso'];       
+                $imagePerso = $row['imagePerso'];  
+            } else {
+                echo "0 results";
+            }
+        } 
+        else 
+            $id = $_POST['id'];
+
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if(empty($_POST['nom'])){
                 $nomErreur = "Le nom est requis.";
@@ -50,35 +80,26 @@
                 $imagePerso = $_POST['imagePerso'];
             }
 
-            // Create connection
-            $conn =new mysqli($servername, $username, $password, $db);
-            $conn->query('SET NAMES utf8');
-    
-            // Check connection
-            if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
-            }
-            echo "Connected successfully";
-    
-            $sql = "INSERT INTO cours (nom, prenom, perso, imagePerso) VALUES ('$nom', '$prenom', '$perso', '$imagePerso')";
+            $sql = "UPDATE cours SET nom='$nom', prenom='$prenom', perso='$perso', imagePerso='$imagePerso' WHERE id='$id' ";
 
-            echo $sql;
-    
             if (mysqli_query($conn, $sql)) {
                 echo "Enregistrement réussi";
                 } else {
                 echo "Error: " . $sql . "<br>" . mysqli_error($conn);
                 }
-            mysqli_close($conn);
+                mysqli_close($conn);
             }
 
             echo "<a href='index.php'> Retour </a>";
 
-    if($_SERVER["REQUEST_METHOD"] != "POST" || $erreur == true) {       
-?>
+        if($_SERVER["REQUEST_METHOD"] != "POST" || $erreur == true) {       
+    ?>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
             <div class="container-fluid">
                 <div class="row">
+                    <div class="All">
+                        <input type="hidden" name="id" value="<?php echo $id; ?>">
+                    </div>
                     <div class="All">
                         <h4>Nom : <input type="text" name="nom" value="<?php echo $nom; ?>"></h4><br>
                         <span style="color:red"> <?php echo $nomErreur; ?> </span>
@@ -103,14 +124,15 @@
         </form>
 
         
-        <?php
+    <?php
+        }
+            function test_input($data){
+                $data = trim($data);
+                $data = addslashes($data);
+                $data = htmlspecialchars($data);
+                return $data;
             }
-                function test_input($data){
-                    $data = trim($data);
-                    $data = addslashes($data);
-                    $data = htmlspecialchars($data);
-                    return $data;
-                }
-        ?>
+    ?>
+        
 </body>
 </html>
