@@ -1,3 +1,21 @@
 body{
     background-color: black;
+    color: white;
+    margin: 2%;
+}
+
+h3{
+color: blue;
+}
+
+.retour{
+    margin-top: 2%;
+}
+
+.allofem{
+    margin-top: 2%;
+}
+
+input[type="submit"]{
+    padding: 2px;
 }

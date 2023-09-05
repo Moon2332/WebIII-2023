@@ -13,6 +13,15 @@
    
 
     <?php
+
+    if(isset($_GET['action'])){
+        if($_GET['action'] == "reussi"){
+            ?>
+            <script>alert("action réussie.");</script>
+            <?php
+        }
+    }
+
         $servername = "localhost";
         $username = "root";
         $password = "root";
@@ -33,8 +42,8 @@
 
         if ($result->num_rows > 0) {
             echo "  <div class=\"table-responsive\">
-                        <table class=\"table table-dark table-striped table-hover\">
-                            <thead class=\"thead-dark\"> 
+                        <table class=\"table table-dark table-striped table-hover table-bordered\">
+                            <thead> 
                                 <tr>
                                     <th scope=\"col\">ID</th>
                                     <th scope=\"col\">Nom</th>
@@ -67,7 +76,7 @@
 
         $conn->close();
 
-        echo "<a href='ajouter.php' > Ajouter </a>";
+        echo "<button type=\"button\" class=\"btn btn-link btn-outline-primary btn-lg\"> <a href='ajouter.php' > Ajouter </a></button>";
     ?>
 
 </body>

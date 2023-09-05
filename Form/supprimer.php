@@ -17,6 +17,7 @@
         $prenomErr = "";
         $persoErr = "";
         $imagePersoErr = "";
+        $answer = "";
         $erreur = false;
 
         // Create connection
@@ -49,17 +50,23 @@
             $id = $_POST['id'];
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
             $sql = "DELETE FROM cours WHERE id = '$id'";
 
             if (mysqli_query($conn, $sql)) {
-                echo "La donnée a été supprimée";
+
+                
+                
+                header("Location: index.php?action=reussi");
+
                 } else {
                 echo "Error: " . $sql . "<br>" . mysqli_error($conn);
                 }
                 mysqli_close($conn);
             }
 
-            echo "<a href='index.php'> Retour </a>";
+            echo "<h3>Formulaire pour supprimer une donnée</h3>";
+            echo "<button type=\"button\" class=\"btn btn-link btn-outline-primary btn-lg retour\" ><a href='index.php'> Retour </a></button>";
 
         if($_SERVER["REQUEST_METHOD"] != "POST" || $erreur == true) {       
     ?>
@@ -81,8 +88,7 @@
                     <div class="All">
                         <h4>Image : <input type="url" name="imagePerso" value="<?php echo $imagePerso; ?>"></h4><br>
                     </div>
-                    <div class="All">
-                        <h4>Êtes vous sûr de vouloir supprimer cette donnée ? </h4>
+                    <div class="All col-12">
                         <input type="submit">
                     </div>
                 </div>
