@@ -12,17 +12,18 @@
 </head>
 <body>
     <?php
-        $userU = ""; $nomErreur = "";
-        $passwordU = "";
-        $erreur = "";
-
         if(isset($_GET['action'])){
             if($_GET['action'] == "decon"){
                 session_unset();
 
                 session_destroy();  
+
+                ?><script>alert("Déconnexion réussie.");</script><?php
             }
         }
+        $userU = ""; $nomErreur = "";
+        $passwordU = "";
+        $erreur = "";
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -38,7 +39,7 @@
                 $erreur = true;
             }
             else {
-                $passwordU = test_input($_POST["nom"]);
+                $passwordU = test_input($_POST["password"]);
             }
 
             $userU = $_POST['email'];
@@ -78,17 +79,16 @@
         }
         if ($_SERVER["REQUEST_METHOD"] != "POST") {   
     ?>
-            <script>alert("Déconnexion réussie.");</script>
-
+            
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="All col-12">
-                            <input type="email" name="email" value="<?php echo $userU; ?>"><br>
+                            <input type="email" name="email" placeholder="email"><br>
                         </div>
                         
                         <div class="All col-12">
-                            <input type="password" name="password" value="<?php echo $passwordU; ?>"><br>
+                            <input type="password" name="password" placeholder="mot de passe"><br>
                         </div>
 
                         <div class="All col-12">

@@ -85,11 +85,11 @@
 
             echo "<button type=\"button\" class=\"btn btn-link btn-outline-primary btn-lg\"> <a href='ajouter.php' > Ajouter </a></button>";
 
-            echo "<button type=\"button\" class=\"btn btn-link btn-outline-primary btn-lg\"> <a href='connexion.php' > Déconnexion </a></button>";
+            echo "<button type=\"button\" class=\"btn btn-link btn-outline-primary btn-lg\"> <a href='connexion.php?action=decon' > Déconnexion </a></button>";
 
         }
         else {
-            header("Location: connexion.php?action=decon");
+            header("Location: connexion.php");
         }
     ?>
 

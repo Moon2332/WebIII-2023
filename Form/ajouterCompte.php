@@ -58,6 +58,7 @@
             }
             //echo "Connected successfully";
     
+            $mdp = sha1($mdp, false);
             $sql = "INSERT INTO usagers (user, email, password) VALUES ('$nom', '$email', '$mdp')";
 
             //echo $sql;
