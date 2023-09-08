@@ -18,12 +18,11 @@
         $servername = "localhost";
         $username = "root";
         $password = "root";
-        $db = "tableexercice";
+        $db = "linge";
    
         $nom = ""; $nomErreur = "";
-        $prenom = ""; $prenomErr = "";
-        $perso = ""; $persoErr = "";
-        $imagePerso = ""; $imagePersoErr = "";
+        $email = ""; $emailErr = "";
+        $mdp = ""; $mdpErr = "";
         $erreur = false;
    
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -34,27 +33,19 @@
             else {
                 $nom = test_input($_POST["nom"]);
             }
-            if(empty($_POST['prenom'])){
-                $prenomErr = "Le prenom est requis.";
+            if(empty($_POST['email'])){
+                $emailErr = "Le email est requis.";
                 $erreur = true;
             }
             else{
-                $prenom = test_input($_POST["prenom"]);
+                $email = test_input($_POST["email"]);
             }
-            if(empty($_POST['perso'])){
-                $persoErr = "Le caractère est requis";
+            if(empty($_POST['mdp'])){
+                $mdpErr = "Le mot de passe est requis";
                 $erreur = true;
             }
             else{
-                $perso = test_input($_POST["perso"]);
-            }
-            if(empty($_POST['imagePerso'])){
-                $imagePersoErr = "Le URL de l'image est requis.";
-                $erreur = true;
-            }
-            else{
-
-                $imagePerso = $_POST['imagePerso'];
+                $mdp = test_input($_POST["mdp"]);
             }
 
             // Create connection
@@ -67,9 +58,9 @@
             }
             //echo "Connected successfully";
     
-            $sql = "INSERT INTO cours (nom, prenom, perso, imagePerso) VALUES ('$nom', '$prenom', '$perso', '$imagePerso')";
+            $sql = "INSERT INTO usagers (user, email, password) VALUES ('$nom', '$email', '$mdp')";
 
-            echo $sql;
+            //echo $sql;
     
             if (mysqli_query($conn, $sql)) {
                 header("Location: index.php?action=reussi");
@@ -79,8 +70,8 @@
             mysqli_close($conn);
             }
 
-            echo "<h3>Formulaire pour ajouter une nouvelle donnée</h3>";
-            echo "<button type=\"button\" class=\"btn btn-link btn-outline-primary btn-lg retour\" ><a href='index.php'> Retour </a></button>";
+            echo "<h3>Formulaire pour ajouter un utilisateur</h3>";
+            echo "<button type=\"button\" class=\"btn btn-link btn-outline-primary btn-lg retour\" ><a href='connexion.php'> Retour </a></button>";
 
     if($_SERVER["REQUEST_METHOD"] != "POST" || $erreur == true) {       
 ?>
@@ -92,16 +83,12 @@
                         <span style="color:red"> <?php echo $nomErreur; ?> </span>
                     </div>
                     <div class="All col-12">
-                        <h4>Prenom :  <input type="text" name="prenom" value="<?php echo $prenom; ?>"></h4><br>
-                        <span style="color:red"> <?php echo $prenomErr; ?> </span>
+                        <h4>Email :  <input type="email" name="email" value="<?php echo $email; ?>"></h4><br>
+                        <span style="color:red"> <?php echo $emailErr; ?> </span>
                     </div>
                     <div class="All col-12">
-                        <h4>Caractère: <input type="text" name="perso" value="<?php echo $perso; ?>"></h4><br>
-                        <span style="color:red"> <?php echo $persoErr; ?> </span>
-                    </div>
-                    <div class="All col-12">
-                        <h4>Image : <input type="url" name="imagePerso" value="<?php echo $imagePerso; ?>"></h4><br>
-                        <span style="color:red"> <?php echo $imagePersoErr; ?> </span>
+                        <h4>Mot de passe : <input type="password" name="mdp" value="<?php echo $mdp; ?>"></h4><br>
+                        <span style="color:red"> <?php echo $mdpErr; ?> </span>
                     </div>
                     <div class="All col-12">
                         <input type="submit">

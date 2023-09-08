@@ -1,3 +1,7 @@
+<?php
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,73 +14,83 @@
     <title>Exercice BD</title>
 </head>
 <body>
-   
+    <?php
+        if ( $_SESSION["connexion"] == true)
+        {
+    ?> 
+        <script>alert("Connexion réussie.");</script>
 
     <?php
+            if(isset($_GET['action'])){
+                if($_GET['action'] == "reussi"){
+                    ?>
+                    <script>alert("action réussie.");</script>
+                    <?php
+                }
+            }
 
-    if(isset($_GET['action'])){
-        if($_GET['action'] == "reussi"){
-            ?>
-            <script>alert("action réussie.");</script>
-            <?php
-        }
-    }
+            $servername = "localhost";
+            $username = "root";
+            $password = "root";
+            $db = "tableexercice";
+            // Create connection
+            $conn =new mysqli($servername, $username, $password, $db);
+            $conn->query('SET NAMES utf8');
 
-        $servername = "localhost";
-        $username = "root";
-        $password = "root";
-        $db = "tableexercice";
-        // Create connection
-        $conn =new mysqli($servername, $username, $password, $db);
-        $conn->query('SET NAMES utf8');
+            // Check connection
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
+            //echo "Connected successfully";
 
-        // Check connection
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-        //echo "Connected successfully";
+            $sql = "SELECT * FROM cours";
 
-        $sql = "SELECT * FROM cours";
+            $result = $conn->query($sql);
 
-        $result = $conn->query($sql);
-
-        if ($result->num_rows > 0) {
-            echo "  <div class=\"table-responsive\">
-                        <table class=\"table table-dark table-striped table-hover table-bordered\">
-                            <thead> 
-                                <tr>
-                                    <th scope=\"col\">ID</th>
-                                    <th scope=\"col\">Nom</th>
-                                    <th scope=\"col\">Prenom</th>
-                                    <th scope=\"col\">Character</th>
-                                    <th scope=\"col\">Image</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+            if ($result->num_rows > 0) {
+                echo "  <div class=\"table-responsive\">
+                            <table class=\"table table-dark table-striped table-hover table-bordered\">
+                                <thead> 
+                                    <tr>
+                                        <th scope=\"col\">ID</th>
+                                        <th scope=\"col\">Nom</th>
+                                        <th scope=\"col\">Prenom</th>
+                                        <th scope=\"col\">Character</th>
+                                        <th scope=\"col\">Image</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                    ";
+                while($row = $result->fetch_assoc()) {
+                        echo "      <tr>
+                                        <td scope=\"row\">" . $row["id"]  . "</td>
+                                        <td>" . $row["nom"] . "</td>
+                                        <td>" . $row["prenom"] . "</td>
+                                        <td>" . $row["perso"] . "</td>
+                                        <td> <img class=\"img-fluid rounded float-left\" src=\"" . $row["imagePerso"]  . "\"' width=\"200px\" height=\"200px\"></td>
+                                        <td> <a href=\"modifier.php?id=" . $row["id"] . "\"> Modifier </a></td>
+                                        <td> <a href=\"supprimer.php?id=" . $row["id"] . "\"> Supprimer </a></td>
+                                    </tr>      
+                    ";
+                }
+                echo "          </tbody>
+                            </table>
+                        </div>
                 ";
-            while($row = $result->fetch_assoc()) {
-                    echo "      <tr>
-                                    <td scope=\"row\">" . $row["id"]  . "</td>
-                                    <td>" . $row["nom"] . "</td>
-                                    <td>" . $row["prenom"] . "</td>
-                                    <td>" . $row["perso"] . "</td>
-                                    <td> <img class=\"img-fluid rounded float-left\" src=\"" . $row["imagePerso"]  . "\"' width=\"200px\" height=\"200px\"></td>
-                                    <td> <a href=\"modifier.php?id=" . $row["id"] . "\"> Modifier </a></td>
-                                    <td> <a href=\"supprimer.php?id=" . $row["id"] . "\"> Supprimer </a></td>
-                                </tr>      
-                   ";
-             }
-            echo "          </tbody>
-                        </table>
-                    </div>
-            ";
-        } else {
-                echo "0 results";
+            } else {
+                    echo "0 results";
+            }
+
+            $conn->close();
+
+            echo "<button type=\"button\" class=\"btn btn-link btn-outline-primary btn-lg\"> <a href='ajouter.php' > Ajouter </a></button>";
+
+            echo "<button type=\"button\" class=\"btn btn-link btn-outline-primary btn-lg\"> <a href='connexion.php' > Déconnexion </a></button>";
+
         }
-
-        $conn->close();
-
-        echo "<button type=\"button\" class=\"btn btn-link btn-outline-primary btn-lg\"> <a href='ajouter.php' > Ajouter </a></button>";
+        else {
+            header("Location: connexion.php?action=decon");
+        }
     ?>
 
 </body>
