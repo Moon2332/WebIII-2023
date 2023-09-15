@@ -10,8 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/styleEleve.css">
-    <title>Vote Élève</title>
+    <link rel="stylesheet" href="css/styleEmployeur.css">
+    <title>Vote Employeur</title>
 </head>
 <body>
     <?php
@@ -35,7 +35,7 @@
         
             if(isset($_GET['action'])) {
                 if($_GET['action'] == "Good") {
-                    $sql = "UPDATE voteeleve SET satisfait =satisfait + 1";
+                    $sql = "UPDATE voteemployeur SET satisfait =satisfait + 1";
                     echo $sql;
                     if (mysqli_query($conn, $sql)) {
                         header("Location: index.php");
@@ -46,7 +46,7 @@
                 }
 
                 else if($_GET['action'] == "Neutre"){
-                    $sql = "UPDATE voteeleve SET neutre = neutre + 1";
+                    $sql = "UPDATE voteemployeur SET neutre = neutre + 1";
                     echo $sql;
                     if (mysqli_query($conn, $sql)) {
                         header("Location: index.php");
@@ -57,7 +57,7 @@
                 }
 
                 else if($_GET['action'] == "Bad"){
-                    $sql = "UPDATE voteeleve SET insatisfait = insatisfait + 1";
+                    $sql = "UPDATE voteemployeur SET insatisfait = insatisfait + 1";
                     echo $sql;
                     if (mysqli_query($conn, $sql)) {
                         header("Location: index.php");
