@@ -8,7 +8,7 @@ fieldset{
 }
 
 div p {
-    color: blue;
+    color: black;
 }
 
 .Envoyer{
@@ -16,6 +16,7 @@ div p {
     justify-content: center;
 }
 
-input[type=submit]{
-    background-color: red;
+button{
+    background-color: inherit;
+    border: none;
 }

@@ -1,0 +1,67 @@
+
+html, body, .container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+#styleFormCon{
+    border: 5px #3B5BA5 ridge;
+    background-color: #E87A5D;
+    color: #F3B941;
+    font-size: 40px;
+    font-weight: bolder;
+    display: flex;
+    justify-content: space-between;
+    padding: 10%;
+}
+
+.menuCon{
+    border: 5px #00246B ridge;
+    background-color: #CADCFC;
+    padding: 8%;
+}
+
+.titreMenu{
+    display: flex;
+    justify-content: center;
+}
+
+h1{
+    font-size: 50px;
+    font-weight: bolder;
+}
+
+.optionCon{
+    color: #8AB6F9;
+    font-size: 30px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+}
+
+.rowMenuOption{
+    margin: auto;
+}
+
+.All{
+    margin-bottom: 2%;
+}
+
+input{
+    font-size: 30px;
+    padding: 5px; 
+    background-color: rgb(92, 92, 153);
+    color: black;
+    border: 2px black solid;
+    border-radius: 5%;
+}
+
+input:focus { 
+    background: lightskyblue;
+}
+
+
+

@@ -8,7 +8,7 @@ fieldset{
 }
 
 div p {
-    color: blue;
+    color: white;
 }
 
 .Envoyer{
@@ -16,6 +16,9 @@ div p {
     justify-content: center;
 }
 
-input[type=submit]{
-    background-color: red;
+.Click{
+    display: flex;
+    justify-content: space-around;
 }
+
+
