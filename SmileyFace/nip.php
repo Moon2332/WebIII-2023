@@ -12,18 +12,28 @@
 </head>
 <body>
     <?php
-        echo $_SESSION["connexion"];
-        echo $_SESSION["page"];
+        
         if ( $_SESSION["connexion"] == true)
         {
-            echo $_GET["action"];
+            
+            
+                if ($_SERVER["REQUEST_METHOD"] == "GET") {
+                    if(isset($_GET["action"])){
+                    $_SESSION["action"] =  $_GET["action"];
+                    }
+                }
+
+            echo $_SESSION["action"];
             $nomErreur = ""; $name = "";$erreur = ""; 
             $nip = ""; $nipErreur = ""; 
 
-            $servername = "localhost";
+            /*$servername = "localhost";
             $username = "root";
             $password = "root";
-            $db = "table vote";
+            $db = "table vote";*/
+
+            //Fichier pour connexion local
+            REQUIRE('connLocal.php');
 
             // Create connection
             $conn =new mysqli($servername, $username, $password, $db);
@@ -56,27 +66,18 @@
                 $result = $conn->query($sql);
 
                 if ($result->num_rows > 0) {
-                    //$row = $result->fetch_assoc();
-                    echo "USER TROUVÉ";
+                    $row = $result->fetch_assoc();
 
-                    if(isset($_GET["action"])){
-                        echo $_GET["action"];
-                        if($_GET["action"] == "decon"){
-                            echo "DECON";
-                            //header("Location: connexion.php?action=decon");
-                        }
-                        else if($_GET["action"] == "retour"){
-                            echo "RETOUR";
-                           //header("Location: connexion.php?action=retour");
-                        }
-                        else if($_GET["action"] == "admin"){
-                            echo "ADMIN";
-                            //header("Location: admin.php");
-                        }
+                    if($_SESSION["action"]  == "decon"){
+                        header("Location: connexion.php?action=decon");
                     }
-                    // if($action == 0) 
-                    // else if($action == 1)
-                    // else if($action == 2)
+                    else if($_SESSION["action"]  == "retour"){
+                        header("Location: connexion.php?action=retour");
+                    }
+                    else if($_SESSION["action"]  == "admin"){
+                        echo "ADMIN";
+                        //header("Location: admin.php");
+                    }
                 }else {
                     //echo "<h2>Nom d'usager ou mot de passe invalide</h2>";
                     header("Location: connexion.php");

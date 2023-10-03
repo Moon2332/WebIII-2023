@@ -21,7 +21,7 @@ html, body, .container {
 .menuCon{
     border: 5px #00246B ridge;
     background-color: #CADCFC;
-    padding: 8%;
+    padding: 5%;
 }
 
 .titreMenu{
@@ -39,7 +39,7 @@ h1{
     font-size: 30px;
     font-weight: bold;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
 .rowMenuOption{
@@ -62,6 +62,7 @@ input{
 input:focus { 
     background: lightskyblue;
 }
+
 
 
 

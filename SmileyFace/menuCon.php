@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="CSS/connexion.css" type="text/css">
+    <link rel="stylesheet" href="CSS/conn.css" type="text/css">
     <title>Menu</title>
 </head>
 <body>
@@ -23,29 +23,58 @@
                     <h1 id="titreMenu"> Menu </h1>
                 </div> 
                 <div class="container-fluid optionCon">
-                    <div class="row rowMenuOption">
+                    <div class="row">
                         <div class="col-12">
-                            <i class="fa-solid fa-user"></i>
-                            <a href="admin.php">
-                                <h4> Administrateurs </h4>
-                            </a>
+                            <div class="row">
+                                    <div class="col-1">  
+                                        <a href="admin.php"> 
+                                            <i class="fa-solid fa-user"> </i>
+                                    </div>
+                                    <div class="col-11">
+                                            <p> Administrateurs</p>
+                                        </a>
+                                    </div>
+                            </div>
                         </div>
                         <div class="col-12">
-                            <i class="fa-solid fa-calendar-days"></i>
-                            <a href="even.php">
-                                <h4> Évènements </h4>
-                            </a>
-                        </div>
-                                <div class="col-12">
-                                    
-                                    <a href="dep.php">
-                                        <h4> Departement </h4>
+                            <div class="row">
+                                <div class="col-1"> 
+                                    <a href="even.php"> 
+                                        <i class="fa-solid fa-calendar-days"> </i>
+                                </div>
+                                <div class="col-11">
+                                        <p>Évènements</p>
                                     </a>
                                 </div>
+                            </div>
+                        </div>
                     </div>
-                </div> 
-                <div class="row buttonAdmin">
-                    <button type="button" class="btn btn-link btn-outline-primary btn-lg btnDecon"><a href='nip.php?action=decon'> Déconnexion </a></button>
+                    <div class="row">   
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-1"> 
+                                    <a href="dep.php"> 
+                                        <i class="fa-solid fa-building"></i>
+                                </div>
+                                <div class="col-11">
+                                        <p>Département</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-1">
+                                    <a href="nip.php?action=decon"> 
+                                            <i class="fa-solid fa-right-from-bracket"></i>
+                                </div>
+                                <div class="col-7">
+                                            <p>Déconnexion</p>
+                                        </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
