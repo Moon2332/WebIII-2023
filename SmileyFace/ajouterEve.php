@@ -17,165 +17,174 @@
 <?php
     if ( $_SESSION["connexion"] == true)
     {
-        $servername = "localhost";
-        $username = "root";
-        $password = "root";
-        $db = "table vote";
-   
-        $id =""; $nom = ""; $date = ""; $lieu = ""; $desc = ""; $dep = ""; $erreur = false;
-        $idErr =""; $nomErr = ""; $dateErr = ""; $lieuErr = ""; $descErr = ""; $depErr = ""; 
-   
-
-        // Create connection
-        $conn =new mysqli($servername, $username, $password, $db);
-        $conn->query('SET NAMES utf8');
-
-        // Check connection
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            if(isset($_GET["action"])){
+            $_SESSION["action"] =  $_GET["action"];
+            }
         }
-        //echo "Connected successfully";
+        
+        if ($_SESSION["action"] == 'PageEven')
+        {
+            //Fichier pour connexion local
+            REQUIRE('connLocal.php');
+    
+            $id =""; $nom = ""; $date = ""; $lieu = ""; $desc = ""; $dep = ""; $erreur = false;
+            $idErr =""; $nomErr = ""; $dateErr = ""; $lieuErr = ""; $descErr = ""; $depErr = ""; 
+    
 
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            if(empty($_POST['id'])){
-                $idErr = "Le ID est requis.";
-                $erreur = true;
-            }
-            else {
-                $id = test_input($_POST["nom"]);
-            }
-            if(empty($_POST['nom'])){
-                $nomErr = "Le nom est requis.";
-                $erreur = true;
-            }
-            else {
-                $nom = test_input($_POST["nom"]);
-            }
-            if(empty($_POST['date'])){
-                $dateErr = "La date est requise.";
-                $erreur = true;
-            }
-            else{
-                $date = test_input($_POST["date"]);
-            }
-            if(empty($_POST['lieu'])){
-                $lieuErr = "Le lieu est requis";
-                $erreur = true;
-            }
-            else{
-                $lieu = test_input($_POST["lieu"]);
-            }
-            if(empty($_POST['description'])){
-                $descErr = "La description est requise.";
-                $erreur = true;
-            }
-            else{
-                $desc = $_POST['description'];
+            // Create connection
+            $conn =new mysqli($servername, $username, $password, $db);
+            $conn->query('SET NAMES utf8');
+
+            // Check connection
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
             }
 
-            $sql = "INSERT INTO evenement (id, nom, date, lieu, description) VALUES ('$id', '$nom', '$date', '$lieu', '$desc')";
-
-            $result = $conn->query($sql);
-            
-            if(empty($_POST['deps'])){
-                $depErr = "Choisir au moin un departement";
-                $erreur = true;
-            }
-            else{
-                foreach($_POST['deps'] as $valeur){
-                    $valeur = str_replace("/","",$valeur);
-
-                    $sqlDep = "SELECT id FROM departement WHERE id_D = '$valeur'";
-                    $resultDep = $conn->query($sqlDep);
-
-                    if ($resultDep->num_rows > 0) {
-                        $row = $resultDep->fetch_assoc();
-                        $id_dep = $row['id'];  
-
-                        $sql = "INSERT INTO depart_even (id_depart, id, id_even) VALUES ('$valeur', '$id_dep', '$id')"; 
-                        $result = $conn->query($sql);
-                    } else {
-                        echo "0 results";
-                    }
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                if(empty($_POST['id'])){
+                    $idErr = "Le ID est requis.";
+                    $erreur = true;
                 }
+                else {
+                    $id = test_input($_POST["nom"]);
+                }
+                if(empty($_POST['nom'])){
+                    $nomErr = "Le nom est requis.";
+                    $erreur = true;
+                }
+                else {
+                    $nom = test_input($_POST["nom"]);
+                }
+                if(empty($_POST['date'])){
+                    $dateErr = "La date est requise.";
+                    $erreur = true;
+                }
+                else{
+                    $date = test_input($_POST["date"]);
+                }
+                if(empty($_POST['lieu'])){
+                    $lieuErr = "Le lieu est requis";
+                    $erreur = true;
+                }
+                else{
+                    $lieu = test_input($_POST["lieu"]);
+                }
+                if(empty($_POST['description'])){
+                    $descErr = "La description est requise.";
+                    $erreur = true;
+                }
+                else{
+                    $desc = $_POST['description'];
+                }
+
+                $sql = "INSERT INTO evenement (id, nom, date, lieu, description) VALUES ('$id', '$nom', '$date', '$lieu', '$desc')";
+
+                $result = $conn->query($sql);
                 
+                if(empty($_POST['deps'])){
+                    $depErr = "Choisir au moins un departement";
+                    $erreur = true;
+                }
+                else{
+                    foreach($_POST['deps'] as $valeur){
+                        $valeur = str_replace("/","",$valeur);
+
+                        $sqlDep = "SELECT id FROM departement WHERE id_D = '$valeur'";
+                        $resultDep = $conn->query($sqlDep);
+
+                        if ($resultDep->num_rows > 0) {
+                            $row = $resultDep->fetch_assoc();
+                            $id_dep = $row['id'];  
+
+                            $sql = "INSERT INTO depart_even (id_depart, id, id_even) VALUES ('$valeur', '$id_dep', '$id')"; 
+                            $result = $conn->query($sql);
+                        } else {
+                            echo "0 results";
+                        }
+                    }
+                    
+                }
+                header("Location: even.php");
             }
 
-            header("Location: even.php");
-        }
-
-        if($_SERVER["REQUEST_METHOD"] != "POST" || $erreur == true) { 
+            if($_SERVER["REQUEST_METHOD"] != "POST" || $erreur == true) { 
 ?>
-            <div class="container-fluid" id="FormAjouterCom">
-                <div class="row titre">
-                    <h1> Formulaire pour créer un événement</h1>
-                </div>
-                <div class="row" id="formAjCom">
-                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
-                        <div class="container-fluid allofem">
-                            <div class="row">
-                                <div class="All col-6">
-                                    <h4>ID : <input type="text" name="id" value="<?php echo $id; ?>"></h4><br>
-                                    <span style="color:red"> <?php echo $idErr; ?> </span>
-                                </div>
-                                <div class="All col-6">
-                                    <h4>Nom : <input type="text" name="nom" value="<?php echo $nom; ?>"></h4><br>
-                                    <span style="color:red"> <?php echo $nomErr; ?> </span>
-                                </div>
-                                <div class="All col-6">
-                                    <h4>Date :  <input type="date" name="date" value="<?php echo $date; ?>"></h4><br>
-                                    <span style="color:red"> <?php echo $dateErr; ?> </span>
-                                </div>
-                                <div class="All col-6">
-                                    <h4>Lieu : <input type="text" name="lieu" value="<?php echo $lieu; ?>"></h4><br>
-                                    <span style="color:red"> <?php echo $lieuErr; ?> </span>
-                                </div>
-                                <div class="All col-6">
-                                    <h4>Description : <input type="text" name="description" value="<?php echo $desc; ?>"></h4><br>
-                                    <span style="color:red"> <?php echo $descErr; ?> </span>
-                                </div>
-                                <div class="All col-6">
-                                    <h4><label for="deps">Departement : </label><br></h4>
+                <div class="container-fluid" id="FormAjouterCom">
+                    <div class="row titre">
+                        <h1> Formulaire pour créer un événement</h1>
+                    </div>
+                    <div class="row" id="formAjCom">
+                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+                            <div class="container-fluid allofem">
+                                <div class="row">
+                                    <div class="All col-6">
+                                        <h4>ID : <input type="text" name="id" value="<?php echo $id; ?>"></h4><br>
+                                        <span style="color:red"> <?php echo $idErr; ?> </span>
+                                    </div>
+                                    <div class="All col-6">
+                                        <h4>Nom : <input type="text" name="nom" value="<?php echo $nom; ?>"></h4><br>
+                                        <span style="color:red"> <?php echo $nomErr; ?> </span>
+                                    </div>
+                                    <div class="All col-6">
+                                        <h4>Date :  <input type="date" name="date" value="<?php echo $date; ?>"></h4><br>
+                                        <span style="color:red"> <?php echo $dateErr; ?> </span>
+                                    </div>
+                                    <div class="All col-6">
+                                        <h4>Lieu : <input type="text" name="lieu" value="<?php echo $lieu; ?>"></h4><br>
+                                        <span style="color:red"> <?php echo $lieuErr; ?> </span>
+                                    </div>
+                                    <div class="All col-6">
+                                        <h4>Description : <input type="text" name="description" value="<?php echo $desc; ?>"></h4><br>
+                                        <span style="color:red"> <?php echo $descErr; ?> </span>
+                                    </div>
+                                    <div class="All col-6">
+                                        <span style="color:red"> <?php echo $depErr; ?> </span>
+                                        <h4><label for="deps">Departement : </label><br></h4>
 <?php
-                $sqlD = "SELECT id_D, nom FROM departement";
-                
-                $resultD = $conn->query($sqlD);
+                    $sqlD = "SELECT id_D, nom FROM departement";
+                    
+                    $resultD = $conn->query($sqlD);
 
-                if ($resultD->num_rows > 0) {
-                    while($row = $resultD->fetch_assoc()) {
-?>
-                                    <h4>
-                                        <input type="checkbox" id="<?php echo $row["id_D"]; ?>" name="deps[]" value="<?php echo $row["id_D"]?>">
-                                        <label for="<?php echo $row["id_D"]; ?>"><?php echo $row["id_D"] . " - " . $row["nom"]; ?></label><br>
-                                    </h4>
+                    if ($resultD->num_rows > 0) {
+                        while($row = $resultD->fetch_assoc()) {
+    ?>
+                                        <h4>
+                                            <input type="checkbox" id="<?php echo $row["id_D"]; ?>" name="deps[]" value="<?php echo $row["id_D"]?>">
+                                            <label for="<?php echo $row["id_D"]; ?>"><?php echo $row["id_D"] . " - " . $row["nom"]; ?></label><br>
+                                        </h4>
 <?php                  
+                        }
                     }
-                }
 ?>
-                                </div> 
-                                <div class="All col-12">
-                                    <input type="submit" class="btn btn-link btn-outline-primary btn-lg">
-                                    <button type="button" class="btn btn-link btn-outline-primary btn-lg retour" ><a href='even.php'> Retour </a></button>
+                                    </div> 
+                                    <div class="All col-12">
+                                        <input type="submit" class="btn btn-link btn-outline-primary btn-lg">
+                                        <button type="button" class="btn btn-link btn-outline-primary btn-lg retour" ><a href='even.php'> Retour </a></button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
-            </div>
 
 <?php
             }
         }
         else {
-            header("Location: connexion.php");
-        }  
-
-        function test_input($data){
-            $data = trim($data);
-            $data = addslashes($data);
-            $data = htmlspecialchars($data);
-            return $data;
+            header("Location: connexion.php?action=decon");
         }
-        ?>
+    }
+    else {
+        header("Location: connexion.php");
+    }  
+
+    function test_input($data){
+        $data = trim($data);
+        $data = addslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+?>
 </body>
 </html>

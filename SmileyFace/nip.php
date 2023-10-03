@@ -15,15 +15,16 @@
         
         if ( $_SESSION["connexion"] == true)
         {
-            
-            
-                if ($_SERVER["REQUEST_METHOD"] == "GET") {
-                    if(isset($_GET["action"])){
-                    $_SESSION["action"] =  $_GET["action"];
-                    }
+            if ($_SERVER["REQUEST_METHOD"] == "GET") {
+                if(isset($_GET["action"])){
+                $_SESSION["action"] =  $_GET["action"];
                 }
+                if(isset($_GET["page"])){
+                    $_SESSION["page"] =  $_GET["page"];
+                    }
+            }
 
-            echo $_SESSION["action"];
+            //echo $_SESSION["action"];
             $nomErreur = ""; $name = "";$erreur = ""; 
             $nip = ""; $nipErreur = ""; 
 
@@ -73,6 +74,9 @@
                     }
                     else if($_SESSION["action"]  == "retour"){
                         header("Location: connexion.php?action=retour");
+                    }
+                    else if($_SESSION["action"]  == "even"){
+                        header("Location: even.php");
                     }
                     else if($_SESSION["action"]  == "admin"){
                         echo "ADMIN";

@@ -17,12 +17,8 @@
     <?php
         if ( $_SESSION["connexion"] == true)
         {
-            $servername = "localhost";
-            $username = "root";
-            $password = "root";
-            $db = "table vote";
-            $erreur = false;
-            $_SESSION["admin"] = "PageAdmin";
+            //Fichier pour connexion local
+            REQUIRE('connLocal.php');
 
             // Create connection
             $conn =new mysqli($servername, $username, $password, $db);
@@ -65,8 +61,8 @@
                                             <td>" . $row["email"] . "</td>
                                             <td>" . $row["code"] . "</td>
                                             <td>" . $row["nip"] . "</td>
-                                            <td> <a href=\"modCompte.php?id=" . $row["id"] . "\"> Modifier </a></td>
-                                            <td> <a href=\"supCompte.php?id=" . $row["id"] . "\"> Supprimer </a></td>
+                                            <td> <a href=\"modCompte.php?action=PageAdmin&id=" . $row["id"] . "\"> Modifier </a></td>
+                                            <td> <a href=\"supCompte.php?action=PageAdmin&id=" . $row["id"] . "\"> Supprimer </a></td>
                                         </tr>      
                     ";
                 }
@@ -76,12 +72,11 @@
                             </div>
                         </div>
                         <div class="row buttonAdmin">
-                            <i class="fa-solid fa-user-plus"></i>
-                            <button type="button" class="btn btn-link btn-outline-primary btn-lg"> <a href='ajouterCompte.php'> Ajouter </a></button>
-                            <i class="fa-solid fa-arrow-left"></i>
-                            <button type="button" class="btn btn-link btn-outline-primary btn-lg btnRetour"> <a href='connexion.php?action=retour' > Retour </a></button>
-                            <i class="fa-solid fa-right-from-bracket"></i>
-                            <button type="button" class="btn btn-link btn-outline-primary btn-lg btnDecon"><a href='nip.php?action=decon'> Déconnexion </a></button>
+                            <button type="button" class="btn btn-link btn-outline-primary btn-lg"> <a href='ajouterCompte.php?action=PageAdmin'> <i class="fa-solid fa-user-plus"></i> Ajouter </a></button>
+                            
+                            <button type="button" class="btn btn-link btn-outline-primary btn-lg btnRetour"> <a href='connexion.php?action=retour'> <i class="fa-solid fa-arrow-left"></i> Retour </a></button>
+                            
+                            <button type="button" class="btn btn-link btn-outline-primary btn-lg btnDecon"><a href='connexion.php?action=decon'> <i class="fa-solid fa-right-from-bracket"></i> Déconnexion </a></button>
                         </div>
 
                     </div>
@@ -99,15 +94,6 @@
 
     ?> 
 
-</body>
-</html>
-        
-
-
-  
-
-
     <script src="https://kit.fontawesome.com/b60c3f0b8b.js" crossorigin="anonymous"></script>
-    <script src="js/script.js"></script>
 </body>
 </html>

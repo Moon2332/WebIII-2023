@@ -1,0 +1,26 @@
+body {
+    padding: 10%;
+    background-color: #E87A5D;
+}
+fieldset{
+    border: 5px #3B5BA5 ridge;
+    color: #F3B941;
+    font-size: 30px;
+    font-weight: bolder;
+    display: flex;
+    justify-content: space-around;
+    padding: 5%;
+}
+
+.but{
+   margin-bottom: 2%;
+}
+
+p {
+    color: black;
+}
+
+button{
+    background-color: inherit;
+    border: none;
+}

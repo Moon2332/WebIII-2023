@@ -39,6 +39,8 @@ h1, h2{
 
 .buttonAdmin{
     margin-top: 5%;
+    display: flex;
+    justify-content: center;
 }
 
 .btnRetour, .btnDecon{
@@ -65,7 +67,7 @@ h1, h2{
 }
 
 h4 input:focus{
-    background-color: blue;
+    background-color: lightblue;
 }
 
 

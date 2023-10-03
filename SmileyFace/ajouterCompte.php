@@ -17,7 +17,11 @@
 <?php
     if ( $_SESSION["connexion"] == true)
     {
-        if ($_SESSION["admin"] == 'PageAdmin')
+        if(isset($_GET["action"])){
+            $_SESSION["action"] =  $_GET["action"];
+            }
+        
+        if ($_SESSION["action"] == 'PageAdmin')
         {
             $servername = "localhost";
             $username = "root";
@@ -117,8 +121,7 @@
             }
         }
         else {
-            $_SESSION["page"] == "admin.php";
-            header("Location: nip.php?");
+            header("Location: connexion.php?action=decon");
         }
     }
     else {

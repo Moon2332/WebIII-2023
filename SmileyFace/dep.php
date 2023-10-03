@@ -11,16 +11,15 @@
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="CSS/dep.css" type="text/css">
-    <title>Vote Élève</title>
+    <title>Départements</title>
 </head>
 <body>
     <?php
         if ( $_SESSION["connexion"] == true)
         {
-            $servername = "localhost";
-            $username = "root";
-            $password = "root";
-            $db = "table vote";
+            //Fichier pour connexion local
+            REQUIRE('connLocal.php');
+
             $erreur = false;
 
             // Create connection
@@ -33,7 +32,7 @@
             }
             //echo "connected";
 
-            $sql = "SELECT id, Nom, Coordonateur FROM departement";
+            $sql = "SELECT * FROM departement";
             
             $result = $conn->query($sql);
 
@@ -50,7 +49,6 @@
                                     <th scope="col">ID</th>
                                     <th scope="col">Nom</th>
                                     <th scope="col">Coordinateur/trice</th>
-                                    <th scope="col">Événement</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -58,11 +56,11 @@
             while($row = $result->fetch_assoc()) {
     ?>
                                 <tr>
-                                    <td scope="row"><?php echo $row["id"] ?></td>
-                                    <td><?php echo $row["Nom"] ?></td>
-                                    <td><?php echo $row["Coordonateur"] ?></td>
+                                    <td scope="row"><?php echo $row["id_D"] ?></td>
+                                    <td><?php echo $row["nom"] ?></td>
+                                    <td><?php echo $row["coordonateur"] ?></td>
     <?php 
-                $id = $row["id"];
+                $id = $row["id_D"];
     
                 $sqlD = "SELECT id_even FROM depart_even INNER JOIN departement ON departement.id = depart_even.id_depart WHERE depart_even.id_depart = '$id' " ;
     
@@ -76,9 +74,8 @@
                     }
                 }      
     ?>
-                                    <td><?php echo $TEven ?> </td>
-                                    <td> <a href="modDep.php?id=<?php echo $row["id"] ?>" > Modifier </a></td>
-                                    <td> <a href="supDep.php?id=<?php echo $row["id"] ?>" > Supprimer </a></td>
+                                    <td> <a href="modDep.php?action=PageDep&id=<?php echo $row["id"] ?>" > Modifier </a></td>
+                                    <td> <a href="supDep.php?action=PageDep&id=<?php echo $row["id"] ?>" > Supprimer </a></td>
                                 </tr>      
     <?php                  
             }
@@ -86,9 +83,11 @@
                             </tbody>
                         </table>
                         <div class="row buttonAdmin">
-                            <button type="button" class="btn btn-link btn-outline-primary btn-lg"> <a href='ajDep.php' > Ajouter </a></button>
-                            <button type="button" class="btn btn-link btn-outline-primary btn-lg btnRetour"> <a href='connexion.php?action=retour' > Retour </a></button>
-                            <button type="button" class="btn btn-link btn-outline-primary btn-lg btnDecon"><a href='nip.php?action=decon'> Déconnexion </a></button>
+                            <button type="button" class="btn btn-link btn-outline-primary btn-lg"> <a href='ajDep.php?action=PageDep'> <i class="fa-solid fa-user-plus"></i> Ajouter </a></button>
+                            
+                            <button type="button" class="btn btn-link btn-outline-primary btn-lg btnRetour"> <a href='connexion.php?action=retour'> <i class="fa-solid fa-arrow-left"></i> Retour </a></button>
+                            
+                            <button type="button" class="btn btn-link btn-outline-primary btn-lg btnDecon"><a href='connexion.php?action=decon'> <i class="fa-solid fa-right-from-bracket"></i> Déconnexion </a></button>
                         </div>
                     </div>
     <?php                

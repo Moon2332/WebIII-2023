@@ -39,7 +39,7 @@
                         <div class="col-12">
                             <div class="row">
                                 <div class="col-1"> 
-                                    <a href="even.php"> 
+                                    <a href="even.php?page=Even"> 
                                         <i class="fa-solid fa-calendar-days"> </i>
                                 </div>
                                 <div class="col-11">
@@ -65,7 +65,7 @@
                         <div class="col-12">
                             <div class="row">
                                 <div class="col-1">
-                                    <a href="nip.php?action=decon"> 
+                                    <a href="connexion.php?action=decon"> 
                                             <i class="fa-solid fa-right-from-bracket"></i>
                                 </div>
                                 <div class="col-7">
