@@ -25,10 +25,9 @@
             {
                 $id =""; $nom = "";
                 
-                $servername = "localhost";
-                $username = "root";
-                $password = "root";
-                $db = "table vote";
+                //Fichier pour connexion local
+                REQUIRE('connServer.php');
+                
                 // Create connection
                 $conn =new mysqli($servername, $username, $password, $db);
                 $conn->query('SET NAMES utf8');

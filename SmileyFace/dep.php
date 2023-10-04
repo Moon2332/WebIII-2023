@@ -18,7 +18,7 @@
         if ( $_SESSION["connexion"] == true)
         {
             //Fichier pour connexion local
-            REQUIRE('connLocal.php');
+            REQUIRE('connServer.php');
 
             $erreur = false;
 
@@ -43,12 +43,13 @@
                         <h1> Departement </h1>
                     </div>
                     <div >
-                        <table class="table-responsive">
-                            <thead> 
+                        <table class="table table-striped table-responsive">
+                            <thead class="thead-dark"> 
                                 <tr>
                                     <th scope="col">ID</th>
                                     <th scope="col">Nom</th>
                                     <th scope="col">Coordinateur/trice</th>
+                                    <th scope="col" colspan="2"></th>
                                 </tr>
                             </thead>
                             <tbody>

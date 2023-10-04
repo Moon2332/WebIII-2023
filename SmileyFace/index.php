@@ -16,8 +16,11 @@
 </head>
 <body>
     <?php
-        if ( $_SESSION["connexion"] == true)
-        {
+
+            session_unset();
+
+            session_destroy(); 
+      
             if(isset($_GET["page"])){
                 $_SESSION["page"] =  $_GET["page"];
             }
@@ -25,7 +28,7 @@
             if ($_SESSION["page"] == 'PageEven')
             {
                 //Fichier pour connexion local
-                REQUIRE('connLocal.php');
+                REQUIRE('connServer.php');
 
                 $erreur = false;
 
@@ -38,9 +41,10 @@
                     die("Connection failed: " . $conn->connect_error);
                 }
 
-                if ($_SERVER["REQUEST_METHOD"] == "GET") 
-                    if(isset($_GET['id']))
+                //if ($_SERVER["REQUEST_METHOD"] == "GET") 
+                    if(isset($_GET['id'])){
                         $id = $_GET['id'];
+                    }
                     else 
                         header("Location: even.php");
 
@@ -59,12 +63,7 @@
                 if($_SERVER["REQUEST_METHOD"] != "POST"){  
                     echo "  <div class=\"container-fluid but\" style=\"display: flex;justify-content: space-evenly;\"> 
                                 <div class=\"row\">
-                                    <div class=\"col-6\"> 
-                                        <button type=\"button\" class=\"btn btn-link btn-outline-primary btn-lg\"><a href='nip.php?action=retour&page=index.php'> Retour </a></button>
-                                    </div>
-                                    <div class=\"col-6\"> 
-                                        <button type=\"button\" class=\"btn btn-link btn-outline-primary btn-lg\"><a href='nip.php?action=decon'> Déconnexion </a></button>
-                                    </div>
+                                    <button type=\"button\" class=\"btn btn-link btn-outline-primary btn-lg\"><a href='nip.php?page=connexion.php&action=index.php&id_Ev=$id'> Retour </a></button>
                                 </div>
                             </div>
                         ";
@@ -117,10 +116,6 @@
             else {
                 header("Location: connexion.php?action=decon");
             }
-        }
-        else {
-            header("Location: connexion.php");
-        }
 
     ?>
     <script src="https://kit.fontawesome.com/b60c3f0b8b.js" crossorigin="anonymous"></script>

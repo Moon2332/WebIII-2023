@@ -8,13 +8,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="CSS/admin.css" type="text/css">
+
     <title>NIP</title>
 </head>
-<body>
+<body id="bodyNip">
     <?php
         
-        if ( $_SESSION["connexion"] == true)
-        {
             if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 if(isset($_GET["action"])){
                 $_SESSION["action"] =  $_GET["action"];
@@ -22,6 +24,8 @@
                 if(isset($_GET["page"])){
                     $_SESSION["page"] =  $_GET["page"];
                     }
+                if(isset($_GET['id_Ev']))
+                    $id = $_GET['id_Ev'];
             }
 
             //echo $_SESSION["action"];
@@ -34,7 +38,7 @@
             $db = "table vote";*/
 
             //Fichier pour connexion local
-            REQUIRE('connLocal.php');
+            REQUIRE('connServer.php');
 
             // Create connection
             $conn =new mysqli($servername, $username, $password, $db);
@@ -46,6 +50,9 @@
             }
 
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+
+                $id = $_POST['id'];
 
                 if(empty($_POST['user'])){
                     $nomErreur = "Le username est requis.";
@@ -69,30 +76,28 @@
                 if ($result->num_rows > 0) {
                     $row = $result->fetch_assoc();
 
-                    if($_SESSION["action"]  == "decon"){
-                        header("Location: connexion.php?action=decon");
-                    }
-                    else if($_SESSION["action"]  == "retour"){
-                        header("Location: connexion.php?action=retour");
-                    }
-                    else if($_SESSION["action"]  == "even"){
-                        header("Location: even.php");
-                    }
-                    else if($_SESSION["action"]  == "admin"){
-                        echo "ADMIN";
-                        //header("Location: admin.php");
-                    }
+                    header("Location: " . $_SESSION['page']);
+
                 }else {
-                    //echo "<h2>Nom d'usager ou mot de passe invalide</h2>";
-                    header("Location: connexion.php");
+                    if($_POST["id"] != ""){
+                        if($_SESSION["action"] == "index.php")
+                            header("Location: index.php?page=PageEven&id=" . $_POST["id"]);
+                        else
+                            header("Location: employeur.php?page=PageEven&id=" . $_POST["id"]);
+                    }
                 }
                 $conn->close();
             }
             if ($_SERVER["REQUEST_METHOD"] != "POST") {   
     ?>
-                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+    <div class="container-fluid" id="FormAjouterCom">
+    <div class="row" id="formAjCom">
+                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" id="">
                     <div class="container-fluid allofem">
                         <div class="row">
+                            <div class="All col-12">
+                                <input type="hidden" name="id" value="<?php echo $id; ?>">
+                            </div>
                             <div class="col-12">
                                 <h4>Entrez le username :  <input type="text" name="user" value="<?php echo $name; ?>"></h4>
                             </div>
@@ -100,17 +105,18 @@
                                 <h4>Entrez le NIP :  <input type="password" name="nip" value="<?php echo $nip; ?>"></h4>
                             </div>
                             <div class="All col-12">
-                                <input type="submit">
+                                <input type="submit" class="btn btn-link btn-outline-primary btn-lg">
                             </div>
                         </div>
                     </div>
                 </form>
+                </div>
+                </div>
     <?php
             }
-        }
-        else {
-            header("Location: connexion.php");
-        }
+
+            //header("Location: connexion.php");
+        
 
         function test_input($data){
             $data = trim($data);

@@ -27,7 +27,7 @@
             if ($_SESSION["action"] == 'PageDep')
             {
                 //Fichier pour connexion local
-                REQUIRE('connLocal.php');
+                REQUIRE('connServer.php');
         
                 $id = ""; $id_D =""; $nom = ""; $coor = ""; $erreur = false;
                 $idDErr =""; $nomErr = ""; $coorErr = "";

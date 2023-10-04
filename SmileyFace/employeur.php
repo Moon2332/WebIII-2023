@@ -15,8 +15,11 @@
 </head>
 <body>
     <?php
-        if ( $_SESSION["connexion"] == true)
-        {
+        
+        session_unset();
+
+        session_destroy(); 
+
             if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 if(isset($_GET["page"])){
                 $_SESSION["page"] =  $_GET["page"];
@@ -26,7 +29,7 @@
             if ($_SESSION["page"] == 'PageEven')
             {
                 //Fichier pour connexion local
-                REQUIRE('connLocal.php');
+                REQUIRE('connServer.php');
                 
                 $erreur = false;
 
@@ -59,14 +62,9 @@
                 if($_SERVER["REQUEST_METHOD"] != "POST"){  
                     echo "  <div class=\"container-fluid but\" style=\"display: flex;justify-content: space-evenly;\"> 
                                 <div class=\"row\">
-                                    <div class=\"col-6\"> 
-                                        <button type=\"button\" class=\"btn btn-link btn-outline-primary btn-lg retour\" ><a href='nip.php?action=retour'> Retour </a></button>
-                                    </div>
-                                    <div class=\"col-6\"> 
-                                        <button type=\"button\" class=\"btn btn-link btn-outline-primary btn-lg\"> <a href='nip.php?action=decon' > Déconnexion </a></button>
-                                    </div>
+                                    <button type=\"button\" class=\"btn btn-link btn-outline-primary btn-lg retour\" ><a href='nip.php?page=connexion.php&action=employeur.php&id_Ev=$id'> Retour </a></button>
                                 </div>
-                            </div>
+                                </div>
                         ";
     ?>
                     <div class="container-fluid"> 
@@ -117,10 +115,6 @@
             else {
                 header("Location: connexion.php?action=decon");
             }
-        }
-        else {
-            header("Location: connexion.php");
-        }
 
     ?>
 

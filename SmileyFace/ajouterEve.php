@@ -26,7 +26,7 @@
         if ($_SESSION["action"] == 'PageEven')
         {
             //Fichier pour connexion local
-            REQUIRE('connLocal.php');
+            REQUIRE('connServer.php');
     
             $id =""; $nom = ""; $date = ""; $lieu = ""; $desc = ""; $dep = ""; $erreur = false;
             $idErr =""; $nomErr = ""; $dateErr = ""; $lieuErr = ""; $descErr = ""; $depErr = ""; 

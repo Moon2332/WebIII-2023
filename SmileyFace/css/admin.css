@@ -1,6 +1,6 @@
 
 html, body, .container {
-    background-color: white;
+    background-color: #CADCFC;
     color: #00246B;
     font-family: 'Times New Roman', Times, serif;
     display: flex;
@@ -16,14 +16,14 @@ html, body, .container {
 table{
     border: 5px #8AB6F9 ridge;
     border: #8AB6F9 solid 4px;
-    border-collapse: collapse;
+   border-collapse: collapse; 
 }
 
-td, th {
+ td, th {
     border: #8AB6F9 solid 3px;
     text-align: center;
     padding: 20px;
-}
+} 
 
 .titre{
     display: flex;

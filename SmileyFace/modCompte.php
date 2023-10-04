@@ -24,10 +24,8 @@
             
             if ($_SESSION["action"] == 'PageAdmin')
             {
-                $servername = "localhost";
-                $username = "root";
-                $password = "root";
-                $db = "table vote";
+                //Fichier pour connexion local
+                REQUIRE('connServer.php');
 
                 $id =""; $nom = ""; $email = ""; $code= ""; $nip = ""; $erreur = false;
                 $idErr =""; $nomErr = ""; $emailErr = ""; $codeErr = ""; $nipErr = ""; 

@@ -25,10 +25,8 @@
         
         if ($_SESSION["action"] == 'PageDep')
         {
-            $servername = "localhost";
-            $username = "root";
-            $password = "root";
-            $db = "table vote";
+            //Fichier pour connexion local
+            REQUIRE('connServer.php');
     
             $id =""; $nom = ""; $coor = ""; $erreur = false;
             $idErr =""; $nomErr = ""; $coorErr = "";

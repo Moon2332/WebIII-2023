@@ -18,18 +18,14 @@
     <?php
         if ( $_SESSION["connexion"] == true)
         {
-            if ($_SERVER["REQUEST_METHOD"] == "GET") {
-                if(isset($_GET["action"])){
+            if(isset($_GET["action"])){
                 $_SESSION["action"] =  $_GET["action"];
                 }
-            }
             
             if ($_SESSION["action"] == 'PageAdmin')
             {
-                $servername = "localhost";
-                $username = "root";
-                $password = "root";
-                $db = "table vote";
+                //Fichier pour connexion local
+                REQUIRE('connServer.php');
 
                 $id =""; $nom = ""; $email = ""; $code= ""; $nip = ""; $erreur = false;
                 $idErr =""; $nomErr = ""; $emailErr = ""; $codeErr = ""; $nipErr = ""; 

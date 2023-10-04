@@ -29,13 +29,8 @@
             $passwordU = ""; $name = "";
             $erreur = ""; $nip = ""; $SesCon = "";
 
-            /*$servername = "localhost";
-            $username = "root";
-            $password = "root";
-            $db = "table vote";*/
-
             //Fichier pour connexion local
-            REQUIRE('connLocal.php');
+            REQUIRE('connServer.php');
 
             // Create connection
             $conn = new mysqli($servername, $username, $password, $db);

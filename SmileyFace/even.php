@@ -18,7 +18,7 @@
         if ( $_SESSION["connexion"] == true)
         {
                 //Fichier pour connexion local
-                REQUIRE('connLocal.php');
+                REQUIRE('connServer.php');
                 
                 // Create connection
                 $conn =new mysqli($servername, $username, $password, $db);
@@ -41,8 +41,8 @@
                             <h1> Événement </h1>
                         </div>
                         <div >
-                            <table class="table-responsive">
-                                <thead> 
+                            <table class="table table-striped table-responsive">
+                                <thead class="thead-dark"> 
                                     <tr>
                                         <th scope="col">ID</th>
                                         <th scope="col">Nom</th>
@@ -50,6 +50,7 @@
                                         <th scope="col">Lieu</th>
                                         <th scope="col">Description</th>
                                         <th scope="col">Departement</th>
+                                        <th scope="col" colspan="5"></th>
                                     </tr>
                                 </thead>
                                 <tbody>

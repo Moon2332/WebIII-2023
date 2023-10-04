@@ -17,6 +17,7 @@
 <?php
         if ( $_SESSION["connexion"] == true)
         {
+            $_SESSION["page"] = "menuCon.php";
 ?>
             <div class="container-fluid menuCon">
                 <div class="row titreMenu" >
@@ -27,7 +28,7 @@
                         <div class="col-12">
                             <div class="row">
                                     <div class="col-1">  
-                                        <a href="admin.php"> 
+                                        <a href="admin.php?page=admin.php"> 
                                             <i class="fa-solid fa-user"> </i>
                                     </div>
                                     <div class="col-11">
@@ -39,7 +40,7 @@
                         <div class="col-12">
                             <div class="row">
                                 <div class="col-1"> 
-                                    <a href="even.php?page=Even"> 
+                                    <a href="even.php?page=even.php"> 
                                         <i class="fa-solid fa-calendar-days"> </i>
                                 </div>
                                 <div class="col-11">
@@ -53,7 +54,7 @@
                         <div class="col-12">
                             <div class="row">
                                 <div class="col-1"> 
-                                    <a href="dep.php"> 
+                                    <a href="dep.php?page=dep.php"> 
                                         <i class="fa-solid fa-building"></i>
                                 </div>
                                 <div class="col-11">
