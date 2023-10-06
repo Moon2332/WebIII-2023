@@ -26,11 +26,11 @@
                 }
             }
             $userU = ""; $nomErreur = "";
-            $passwordU = ""; $name = "";
-            $erreur = ""; $nip = ""; $SesCon = "";
+            $passwordU = ""; $passwordUE = ""; $name = "";
+            $erreur = ""; $nip = ""; $SesCon = ""; $Erreur = "";
 
             //Fichier pour connexion local
-            REQUIRE('connServer.php');
+            REQUIRE('connServeur.php');
 
             // Create connection
             $conn = new mysqli($servername, $username, $password, $db);
@@ -51,7 +51,7 @@
                     $userU = test_input($_POST["email"]);
                 }
                 if(empty($_POST['password'])){
-                    $nomErreur = "Le mot de passe est requis.";
+                    $passwordUE = "Le mot de passe est requis.";
                     $erreur = true;
                 }
                 else {
@@ -68,24 +68,32 @@
                     $row = $result->fetch_assoc();
                     $_SESSION["connexion"] = true;
                     header("Location: menuCon.php");
-                } else {
-                    echo "<h2>Nom d'usager ou mot de passe invalide</h2>";
+                } 
+                else {
+                    $erreur = true;
+                    $Erreur = "Nom d'usager ou Mot de passe Invalide.";
                 }
+                    
                 $conn->close();
             }
-            if ($_SERVER["REQUEST_METHOD"] != "POST") {   
+            if ($_SERVER["REQUEST_METHOD"] != "POST"  || $erreur == true) {   
     ?>
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" id="styleFormCon">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="All col-12">
+                            <span style="color:red"> <?php echo $Erreur; ?> </span>
+                        </div>
+                        <div class="All col-12">
                             <label for="email"> Email : </label>
-                            <input type="email" id="email" name="email" placeholder="email"><br>
+                            <input type="email" id="email" name="email" placeholder="email" value="<?php echo $nomErreur; ?>"><br>
+                            <span style="color:red"> <?php echo $nomErreur; ?> </span>
                         </div>
                         
                         <div class="All col-12">
                             <label for="email"> Mot de passe : </label>
-                            <input type="password" id="password" name="password" placeholder="mot de passe"><br>
+                            <input type="password" id="password" name="password" placeholder="mot de passe" value="<?php echo $passwordUE; ?>"><br>
+                            <span style="color:red"> <?php echo $passwordUE; ?> </span>
                         </div>
 
                         <div class="All col-12">
